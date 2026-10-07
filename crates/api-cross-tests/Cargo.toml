@@ -1,0 +1,14 @@
+[package]
+name = "api-cross-tests"
+description = "burn api cross tests"
+publish = false
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+burn = { workspace = true }
+bunsen = { workspace = true, features = ["testing", "audit"] }

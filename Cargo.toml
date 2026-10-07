@@ -1,0 +1,40 @@
+[workspace]
+# Require version 2 to avoid "feature" additiveness for dev-dependencies
+# https://doc.rust-lang.org/cargo/reference/resolver.html#feature-resolver-version-2
+resolver = "2"
+
+members = [
+    "crates/*",
+]
+
+[workspace.package]
+edition = "2024"
+rust-version = "1.99.0"
+version = "0.0.0"
+
+# Dev and test builds are lightly optimized. Tests spend their time in burn's
+# backends, and those are generic: their kernels are compiled into whichever
+# crate instantiates them, often ours. So dependencies get `opt-level = 3`
+# and workspace crates `opt-level = 1`; a step of the FDTD-shaped loop
+# probe runs ~14x faster than with the dependencies alone optimized.
+# For a debugger that shows every local, override for one run:
+# `CARGO_PROFILE_DEV_OPT_LEVEL=0`.
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
+[workspace.lints.rust]
+warnings = "deny"
+exported_private_dependencies = "allow"
+
+[workspace.lints.clippy]
+doc_markdown = "warn"
+double_must_use = "allow"
+redundant_field_names = "allow"
+
+[workspace.dependencies]
+burn = { version = "0.22.0", default-features = false }
+bunsen = "0.38.0"
+
