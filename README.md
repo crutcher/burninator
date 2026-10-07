@@ -1,0 +1,2 @@
+# burninator
+comparative burn tests
