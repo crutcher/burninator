@@ -12,3 +12,14 @@ workspace = true
 [dependencies]
 burn = { workspace = true }
 bunsen = { workspace = true, features = ["testing", "audit"] }
+
+# Each backend feature adds that backend to the cross-test targets; see
+# `testing::target_devices`. `flex`, the CPU backend, is always present and
+# holds the reference recording.
+[features]
+cpu = ["burn/cpu"]
+cuda = ["burn/cuda"]
+metal = ["burn/metal"]
+rocm = ["burn/rocm"]
+vulkan = ["burn/vulkan"]
+wgpu = ["burn/wgpu"]
